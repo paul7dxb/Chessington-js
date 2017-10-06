@@ -1,5 +1,6 @@
 import 'chai/register-should';
 import Bishop from '../../../src/engine/pieces/bishop';
+import Pawn from '../../../src/engine/pieces/pawn';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
 import Board from '../../../src/engine/board';
@@ -32,5 +33,27 @@ describe('Bishop', () => {
         const moves = bishop.getAvailableMoves(board);
 
         moves.should.have.length(11);
+    });
+
+    it('cannot move through friendly pieces', () => {
+        const bishop = new Bishop(Player.WHITE);
+        const friendlyPiece = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(4, 4), bishop);
+        board.setPiece(Square.at(6, 6), friendlyPiece);
+
+        const moves = bishop.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(7, 7));
+    });
+
+    it('cannot move through opposing pieces', () => {
+        const bishop = new Bishop(Player.WHITE);
+        const opposingPiece = new Pawn(Player.BLACK);
+        board.setPiece(Square.at(4, 4), bishop);
+        board.setPiece(Square.at(6, 6), opposingPiece);
+
+        const moves = bishop.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(7, 7));
     });
 });
