@@ -1,5 +1,6 @@
 import 'chai/register-should';
 import Rook from '../../../src/engine/pieces/rook';
+import Pawn from '../../../src/engine/pieces/pawn';
 import Board from '../../../src/engine/board';
 import Player from '../../../src/engine/player';
 import Square from '../../../src/engine/square';
@@ -32,5 +33,27 @@ describe('Rook', () => {
         const moves = rook.getAvailableMoves(board);
 
         moves.should.have.length(14);
+    });
+
+    it('cannot move through friendly pieces', () => {
+        const rook = new Rook(Player.WHITE);
+        const friendlyPiece = new Pawn(Player.WHITE);
+        board.setPiece(Square.at(4, 4), rook);
+        board.setPiece(Square.at(4, 6), friendlyPiece);
+
+        const moves = rook.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(4, 7));
+    });
+
+    it('cannot move through opposing pieces', () => {
+        const rook = new Rook(Player.WHITE);
+        const opposingPiece = new Pawn(Player.BLACK);
+        board.setPiece(Square.at(4, 4), rook);
+        board.setPiece(Square.at(4, 6), opposingPiece);
+
+        const moves = rook.getAvailableMoves(board);
+
+        moves.should.not.deep.include(Square.at(4, 7));
     });
 });
