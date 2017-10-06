@@ -43,48 +43,6 @@ describe('Pawn', () => {
             moves.should.be.empty;
         });
 
-        it('can move diagonally if there is a piece to take', () => {
-            const pawn = new Pawn(Player.WHITE);
-            const opposingPiece = new Rook(Player.BLACK);
-            board.setPiece(Square.at(4, 4), pawn);
-            board.setPiece(Square.at(5, 3), opposingPiece);
-
-            const moves = pawn.getAvailableMoves(board);
-
-            moves.should.deep.include(Square.at(5, 3));
-        });
-
-        it('cannot move diagonally if there is no piece to take', () => {
-            const pawn = new Pawn(Player.WHITE);
-            board.setPiece(Square.at(4, 4), pawn);
-
-            const moves = pawn.getAvailableMoves(board);
-
-            moves.should.not.deep.include(Square.at(5, 3));
-        });
-
-        it('cannot take a friendly piece', () => {
-            const pawn = new Pawn(Player.WHITE);
-            const friendlyPiece = new Rook(Player.WHITE);
-            board.setPiece(Square.at(4, 4), pawn);
-            board.setPiece(Square.at(5, 3), friendlyPiece);
-
-            const moves = pawn.getAvailableMoves(board);
-
-            moves.should.not.deep.include(Square.at(5, 3));
-        });
-
-        it('cannot take the opposing king', () => {
-            const pawn = new Pawn(Player.WHITE);
-            const opposingKing = new King(Player.BLACK);
-            board.setPiece(Square.at(4, 4), pawn);
-            board.setPiece(Square.at(5, 3), opposingKing);
-
-            const moves = pawn.getAvailableMoves(board);
-
-            moves.should.not.deep.include(Square.at(5, 3));
-        });
-
     });
 
     describe('black pawns', () => {
@@ -120,48 +78,6 @@ describe('Pawn', () => {
             const moves = pawn.getAvailableMoves(board);
 
             moves.should.be.empty;
-        });
-
-        it('can move diagonally if there is a piece to take', () => {
-            const pawn = new Pawn(Player.BLACK);
-            const opposingPiece = new Rook(Player.WHITE);
-            board.setPiece(Square.at(4, 4), pawn);
-            board.setPiece(Square.at(3, 3), opposingPiece);
-
-            const moves = pawn.getAvailableMoves(board);
-
-            moves.should.deep.include(Square.at(3, 3));
-        });
-
-        it('cannot move diagonally if there is no piece to take', () => {
-            const pawn = new Pawn(Player.BLACK);
-            board.setPiece(Square.at(4, 4), pawn);
-
-            const moves = pawn.getAvailableMoves(board);
-
-            moves.should.not.deep.include(Square.at(3, 3));
-        });
-
-        it('cannot take a friendly piece', () => {
-            const pawn = new Pawn(Player.BLACK);
-            const friendlyPiece = new Rook(Player.BLACK);
-            board.setPiece(Square.at(4, 4), pawn);
-            board.setPiece(Square.at(3, 3), friendlyPiece);
-
-            const moves = pawn.getAvailableMoves(board);
-
-            moves.should.not.deep.include(Square.at(3, 3));
-        });
-
-        it('cannot take the opposing king', () => {
-            const pawn = new Pawn(Player.BLACK);
-            const opposingKing = new King(Player.WHITE);
-            board.setPiece(Square.at(4, 4), pawn);
-            board.setPiece(Square.at(3, 3), opposingKing);
-
-            const moves = pawn.getAvailableMoves(board);
-
-            moves.should.not.deep.include(Square.at(3, 3));
         });
     });
 
