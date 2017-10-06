@@ -3,8 +3,8 @@ import GameSettings from './gameSettings';
 import Square from './square';
 
 export default class Board {
-    constructor() {
-        this.currentPlayer = Player.WHITE;
+    constructor(currentPlayer) {
+        this.currentPlayer = currentPlayer ? currentPlayer : Player.WHITE;
         this.board = this.createBoard();
     }
 
