@@ -1,7 +1,6 @@
 import Player from "../player"
 import Square from "../square"
 import Piece from "./piece"
-import Board from "../board"
 
 export default class Pawn extends Piece {
 	constructor(player) {
@@ -13,27 +12,32 @@ export default class Pawn extends Piece {
 		let direction = (this.player === Player.WHITE) ? 1 : -1;
         let startingPawnRow = (this.player === Player.WHITE) ? 1 : 6;
 
+        // Get the Pawn's current location
 		let location = board.findPiece(this);
 
-        //find the piece at one square away
-        
+        //Get the square one space in front
         let squareInFront = Square.at(location.row + direction, location.col);
+        // Check that square for pieces
         let pieceInFront = board.getPiece(squareInFront);
-        if (!pieceInFront){
-            moves.push(Square.at(location.row + direction, location.col));
 
+        if (!pieceInFront){
+            // Square in front is a valid move
+            moves.push(squareInFront);
+            // If the Pawn is in the starting row it can move 2 squares
             if (location.row === startingPawnRow) {
-                
-                let nextSquareInFront = Square.at(location.row + 2* direction, location.col);
+
+                // Find the square two spaces away
+                let nextSquareInFront = Square.at(location.row + 2 * direction, location.col);
+
+                // Check the square for pieces
                 let nextPieceInFront = board.getPiece(nextSquareInFront);
                 if (!nextPieceInFront){
-                    moves.push(Square.at(location.row + 2 * direction, location.col));
+                    // Square two pieces in front is a valid move
+                    moves.push(nextSquareInFront);
                 }
             }
-
         }
 
-	
 		return moves
 	}
 }
