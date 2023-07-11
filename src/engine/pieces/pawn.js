@@ -1,6 +1,7 @@
 import Player from "../player"
 import Square from "../square"
 import Piece from "./piece"
+import Board from "../board"
 
 export default class Pawn extends Piece {
 	constructor(player) {
@@ -14,12 +15,25 @@ export default class Pawn extends Piece {
 
 		let location = board.findPiece(this);
 
-		moves.push(Square.at(location.row + direction, location.col));
+        //find the piece at one square away
+        
+        let squareInFront = Square.at(location.row + direction, location.col);
+        let pieceInFront = board.getPiece(squareInFront);
+        if (!pieceInFront){
+            moves.push(Square.at(location.row + direction, location.col));
 
-		if (location.row === startingPawnRow) {
-			moves.push(Square.at(location.row + 2 * direction, location.col));
-		}
+            if (location.row === startingPawnRow) {
+                
+                let nextSquareInFront = Square.at(location.row + 2* direction, location.col);
+                let nextPieceInFront = board.getPiece(nextSquareInFront);
+                if (!nextPieceInFront){
+                    moves.push(Square.at(location.row + 2 * direction, location.col));
+                }
+            }
 
+        }
+
+	
 		return moves
 	}
 }
