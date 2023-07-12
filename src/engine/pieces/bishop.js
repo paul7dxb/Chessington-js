@@ -6,7 +6,6 @@ export default class Bishop extends RayPiece {
         super(player);
     }
 
-    
     getAvailableMoves(board) {
 		let bishopDirections = [
 			{row:-1, col:-1 }, {row:1, col:1 }, {row:1, col:-1 },{row: -1, col:1 }
