@@ -19,9 +19,9 @@ export default class Rook extends Piece {
 		
 		for (let rookDirection of rookDirections){
 			for( let i = 1; i < 8; i++ ){
-				let potentialSquare = Square.at(location.row + rookDirection.row * i, location.col + rookDirection.col * i);
+				const potentialSquare = Square.at(location.row + rookDirection.row * i, location.col + rookDirection.col * i);
 				if(potentialSquare.row >= 0 && potentialSquare.row <= 7 && potentialSquare.col >= 0 && potentialSquare.col <= 7){
-					let piece = board.getPiece(potentialSquare);
+					const piece = board.getPiece(potentialSquare);
 					if(!piece){
 						moves.push(potentialSquare);
 						continue;
@@ -29,11 +29,14 @@ export default class Rook extends Piece {
 					if(piece.player !== this.player){
 						moves.push(potentialSquare);
 					}
+					// Reached another piece so can't go further
 					break;
 				}
-				else {break}
+				else {
+					// Off the board so stop moving
+					break;
+				}
 			}	
-			
 		}
 
 		
