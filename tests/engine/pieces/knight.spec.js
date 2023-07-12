@@ -1,4 +1,9 @@
+import 'chai/register-should';
+import Pawn from '../../../src/engine/pieces/pawn';
 import Knight from '../../../src/engine/pieces/knight';
+import Board from '../../../src/engine/board';
+import Square from '../../../src/engine/square';
+import Player from '../../../src/engine/player';
 
 describe('Knight', () => {
 

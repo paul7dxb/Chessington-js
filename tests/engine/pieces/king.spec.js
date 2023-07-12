@@ -1,3 +1,4 @@
+import 'chai/register-should';
 import King from '../../../src/engine/pieces/king';
 import Board from '../../../src/engine/board';
 import Square from '../../../src/engine/square';

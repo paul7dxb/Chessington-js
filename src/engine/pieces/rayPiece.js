@@ -4,14 +4,17 @@ import King from "./king"
 
 
 export default class RayPiece extends Piece {
-	constructor(player) {
+	constructor(player,directions) {
 		super(player);
+        this.directions=directions;
 	}
 
-	getRayMoves(board, rayPieceDirections) {
+	getAvailableMoves(board) {
 		let moves = []
 
 		let location = board.findPiece(this)
+
+        const rayPieceDirections = this.directions;
 
 		// find how far piece can go in each direction
 		for (let rayPieceDirection of rayPieceDirections){
