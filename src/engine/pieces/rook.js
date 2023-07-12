@@ -5,13 +5,13 @@ import RayPiece from "./rayPiece"
 
 export default class Rook extends RayPiece {
 	constructor(player) {
-		const directions = [
+		super(player)
+		this.directions = [
 			{ row: 0, col: -1 },
 			{ row: 0, col: 1 },
 			{ row: 1, col: 0 },
 			{ row: -1, col: 0 },
 		]
-		super(player, directions)
 	}
 
 }

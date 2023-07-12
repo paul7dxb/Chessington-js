@@ -2,13 +2,14 @@
 import RayPiece from "./rayPiece"
 
 export default class Bishop extends RayPiece {
+
 	constructor(player) {
-		const directions = [
+		super(player)
+		this.directions = [
 			{ row: -1, col: -1 },
 			{ row: 1, col: 1 },
 			{ row: 1, col: -1 },
 			{ row: -1, col: 1 },
 		]
-		super(player, directions)
 	}
 }

@@ -43,6 +43,78 @@ describe('Pawn', () => {
             moves.should.be.empty;
         });
 
+
+        it('Take opposing piece LHS', () => {
+            const pawn = new Pawn(Player.WHITE);
+            const opposingPiece = new Pawn(Player.BLACK);
+
+            board.setPiece(Square.at(5, 3), opposingPiece);
+            board.setPiece(Square.at(4, 4), pawn);
+
+            const moves = pawn.getAvailableMoves(board);
+
+            moves.should.deep.include(Square.at(5, 3));
+        });
+
+        it('Take opposing piece RHS', () => {
+            const pawn = new Pawn(Player.WHITE);
+            const opposingPiece = new Pawn(Player.BLACK);
+
+            board.setPiece(Square.at(5, 5), opposingPiece);
+            board.setPiece(Square.at(4, 4), pawn);
+
+            const moves = pawn.getAvailableMoves(board);
+
+            moves.should.deep.include(Square.at(5, 5));
+        });
+
+        it('En Passant move available after opposing pawn makes double move LHS', () => {
+            const pawn = new Pawn(Player.WHITE);
+            const opposingPiece = new Pawn(Player.BLACK);
+
+            board.setPiece(Square.at(6, 3), opposingPiece);
+            board.setPiece(Square.at(4, 4), pawn);
+            board.setPlayerBlack();
+            opposingPiece.moveTo(board, Square.at(4, 3));
+
+            const moves = pawn.getAvailableMoves(board);
+
+            moves.should.deep.include(Square.at(5, 3));
+        });
+
+        it('En Passant move available after opposing pawn makes double move RHS', () => {
+            const pawn = new Pawn(Player.WHITE);
+            const opposingPiece = new Pawn(Player.BLACK);
+
+            board.setPiece(Square.at(6, 5), opposingPiece);
+            board.setPiece(Square.at(4, 4), pawn);
+            board.setPlayerBlack();
+            opposingPiece.moveTo(board, Square.at(4, 5));
+
+            const moves = pawn.getAvailableMoves(board);
+
+            moves.should.deep.include(Square.at(5, 5));
+        });
+
+        it('Cannot En Passant if another move occurs', () => {
+            const pawn = new Pawn(Player.WHITE);
+            const opposingPiece = new Pawn(Player.BLACK);
+            const opposingPieceExtraMove = new Pawn(Player.BLACK);
+
+            board.setPiece(Square.at(6, 5), opposingPiece);
+            board.setPiece(Square.at(6, 0), opposingPieceExtraMove);
+            board.setPiece(Square.at(4, 4), pawn);
+            board.setPlayerBlack();
+            opposingPiece.moveTo(board, Square.at(4, 5));
+            board.setPlayerBlack();
+            opposingPieceExtraMove.moveTo(board, Square.at(4, 0));
+
+            const moves = pawn.getAvailableMoves(board);
+
+            moves.should.deep.not.include(Square.at(5, 5));
+        });
+
+
     });
 
     describe('black pawns', () => {
@@ -102,5 +174,74 @@ describe('Pawn', () => {
 
         moves.should.not.deep.include(Square.at(4, 3));
     });
+
+    
+    it('Take opposing piece LHS', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const opposingPiece = new Pawn(Player.WHITE);
+
+        board.setPiece(Square.at(3, 3), opposingPiece);
+        board.setPiece(Square.at(4, 4), pawn);
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.deep.include(Square.at(3, 3));
+    });
+
+    it('Take opposing piece RHS', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const opposingPiece = new Pawn(Player.WHITE);
+
+        board.setPiece(Square.at(3, 5), opposingPiece);
+        board.setPiece(Square.at(4, 4), pawn);
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.deep.include(Square.at(3, 5));
+    });
+
+    it('En Passant move available after opposing pawn makes double move LHS', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const opposingPiece = new Pawn(Player.WHITE);
+
+        board.setPiece(Square.at(1, 3), opposingPiece);
+        board.setPiece(Square.at(3, 4), pawn);
+        opposingPiece.moveTo(board, Square.at(3, 3));
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.deep.include(Square.at(2, 3));
+    });
+
+    it('En Passant move available after opposing pawn makes double move RHS', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const opposingPiece = new Pawn(Player.WHITE);
+
+        board.setPiece(Square.at(1, 5), opposingPiece);
+        board.setPiece(Square.at(3, 4), pawn);
+        opposingPiece.moveTo(board, Square.at(3, 5));
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.deep.include(Square.at(2, 5));
+    });
+
+    it('Cannot En Passant if another move occurs', () => {
+        const pawn = new Pawn(Player.BLACK);
+        const opposingPiece = new Pawn(Player.WHITE);
+        const opposingPieceExtraMove = new Pawn(Player.WHITE);
+
+        board.setPiece(Square.at(1, 5), opposingPiece);
+        board.setPiece(Square.at(1, 0), opposingPieceExtraMove);
+        board.setPiece(Square.at(3, 4), pawn);
+        opposingPiece.moveTo(board, Square.at(3, 5));
+        board.setPlayerWhite();
+        opposingPieceExtraMove.moveTo(board, Square.at(3, 0));
+
+        const moves = pawn.getAvailableMoves(board);
+
+        moves.should.deep.not.include(Square.at(2, 5));
+    });
+
 
 });

@@ -3,7 +3,8 @@ import RayPiece from "./rayPiece"
 
 export default class Queen extends RayPiece {
 	constructor(player) {
-		const directions = [
+		super(player)
+		this.directions = [
 			{ row: -1, col: -1 },
 			{ row: 1, col: 1 },
 			{ row: 1, col: -1 },
@@ -13,6 +14,5 @@ export default class Queen extends RayPiece {
 			{ row: 1, col: 0 },
 			{ row: -1, col: 0 },
 		]
-		super(player,directions)
 	}
 }

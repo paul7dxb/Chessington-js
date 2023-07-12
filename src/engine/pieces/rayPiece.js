@@ -4,9 +4,8 @@ import King from "./king"
 
 
 export default class RayPiece extends Piece {
-	constructor(player,directions) {
+	constructor(player) {
 		super(player);
-        this.directions=directions;
 	}
 
 	getAvailableMoves(board) {
