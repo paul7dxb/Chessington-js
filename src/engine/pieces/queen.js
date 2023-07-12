@@ -1,11 +1,18 @@
-import Piece from './piece';
+import Piece from "./piece"
+import RayPiece from "./rayPiece"
 
-export default class Queen extends Piece {
-    constructor(player) {
-        super(player);
-    }
-
-    getAvailableMoves(board) {
-        return new Array(0);
-    }
+export default class Queen extends RayPiece {
+	constructor(player) {
+		const directions = [
+			{ row: -1, col: -1 },
+			{ row: 1, col: 1 },
+			{ row: 1, col: -1 },
+			{ row: -1, col: 1 },
+			{ row: 0, col: -1 },
+			{ row: 0, col: 1 },
+			{ row: 1, col: 0 },
+			{ row: -1, col: 0 },
+		]
+		super(player,directions)
+	}
 }
