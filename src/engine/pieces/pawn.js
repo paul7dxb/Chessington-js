@@ -49,33 +49,23 @@ export default class Pawn extends Piece {
 
 		// Check diagonal for opposing piece
 
-        // Diagonal left
-		if (location.col !== 0) {
-			const diagonalMoveLeft = Square.at(
-				location.row + direction,
-				location.col - 1
-			)
-            const pieceInDiagonalLeft = board.getPiece(diagonalMoveLeft);
-
-            // If there is a piece in the square and it belongs to opposing player
-            if(pieceInDiagonalLeft && (pieceInDiagonalLeft.player !== this.player) && !(pieceInDiagonalLeft instanceof King)){
-                moves.push(diagonalMoveLeft);
+        const diagonalMoves = [{row: direction, col:-1}, {row: direction, col:1}];  
+        for (let diagonalMove of diagonalMoves )  {
+            if (location.col !== 0 && location.col !== 7) {
+                const potentialMove = Square.at(
+                    location.row + direction,
+                    location.col + diagonalMove.col 
+                )
+                const pieceInSquare = board.getPiece(potentialMove);
+    
+                // If there is a piece in the square and it belongs to opposing player
+                if(pieceInSquare && (pieceInSquare.player !== this.player) && !(pieceInSquare instanceof King)){
+                    moves.push(potentialMove);
+                }
             }
-		}
-
-        // Diagonal right
-		if (location.col !== 7) {
-			const diagonalMoveRight = Square.at(
-				location.row + direction,
-				location.col + 1
-			)
-            const pieceInDiagonalRight = board.getPiece(diagonalMoveRight);
-            // Check not a King Piece
-            // If there is a piece in the square and it belongs to opposing player
-            if(pieceInDiagonalRight && (pieceInDiagonalRight.player !== this.player) && !(pieceInDiagonalRight instanceof King)){
-                moves.push(diagonalMoveRight);
-            }
-		}
+        }     
+        
+		
 
 		return moves
 	}
