@@ -1,5 +1,6 @@
 import Piece from "./piece"
 import Square from "../square"
+import King from "./king"
 
 
 export default class Rook extends Piece {
@@ -26,7 +27,7 @@ export default class Rook extends Piece {
 						moves.push(potentialSquare);
 						continue;
 					}
-					if(piece.player !== this.player){
+					if(piece.player !== this.player && !(piece instanceof King)){
 						moves.push(potentialSquare);
 					}
 					// Reached another piece so can't go further
